@@ -1,39 +1,36 @@
 ```cpp
 #include "spectrometer_interface.h"
-#include "recording_settings.h"
-#include "spectra_reader.h"
-#include "spectra_display.h"
-#include "spectra_saver.h"
+#include "spectrometer_api.h"
 
 SpectrometerInterface::SpectrometerInterface() {
-    // Initialize spectrometer API
-    spectrometerAPI = new SpectrometerAPI();
+    spectrometer = nullptr;
 }
 
 SpectrometerInterface::~SpectrometerInterface() {
-    // Clean up spectrometer API
-    delete spectrometerAPI;
+    if (spectrometer != nullptr) {
+        delete spectrometer;
+    }
 }
 
-void SpectrometerInterface::setRecordingSettings(RecordingSettings settings) {
-    // Set the recording settings of the spectrometer
-    spectrometerAPI->setRecordingSettings(settings);
+bool SpectrometerInterface::initializeSpectrometer() {
+    spectrometer = new SpectrometerAPI();
+    if (spectrometer->initialize()) {
+        return true;
+    } else {
+        std::cerr << "Error: Failed to initialize spectrometer." << std::endl;
+        return false;
+    }
 }
 
-Spectra SpectrometerInterface::readSpectra() {
-    // Read measured spectra from spectrometer
-    return spectrometerAPI->readSpectra();
+bool SpectrometerInterface::isSpectrometerInitialized() {
+    if (spectrometer != nullptr) {
+        return spectrometer->isInitialized();
+    } else {
+        return false;
+    }
 }
 
-void SpectrometerInterface::displaySpectra(Spectra spectra) {
-    // Display read spectra
-    SpectraDisplay display;
-    display.showSpectra(spectra);
-}
-
-void SpectrometerInterface::saveSpectra(Spectra spectra) {
-    // Save read spectra
-    SpectraSaver saver;
-    saver.saveSpectra(spectra);
+SpectrometerAPI* SpectrometerInterface::getSpectrometer() {
+    return spectrometer;
 }
 ```

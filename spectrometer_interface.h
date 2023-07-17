@@ -10,16 +10,12 @@ public:
     SpectrometerInterface();
     ~SpectrometerInterface();
 
-    bool connectToSpectrometer();
-    void disconnectFromSpectrometer();
-    bool isSpectrometerConnected();
-
-    void setRecordingSettings(RecordingSettings settings);
-    RecordingSettings getRecordingSettings();
+    bool initializeSpectrometer();
+    void setRecordingSettings(const RecordingSettings& settings);
 
 private:
-    SpectrometerAPI* spectrometerAPI;
-    RecordingSettings recordingSettings;
+    SpectrometerAPI m_spectrometerAPI;
+    RecordingSettings m_recordingSettings;
 };
 
 #endif // SPECTROMETER_INTERFACE_H

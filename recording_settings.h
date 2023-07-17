@@ -2,21 +2,17 @@
 #ifndef RECORDING_SETTINGS_H
 #define RECORDING_SETTINGS_H
 
+#include "spectrometer_interface.h"
+
 class RecordingSettings {
 public:
-    RecordingSettings();
-    ~RecordingSettings();
+    RecordingSettings(SpectrometerInterface& spectrometer);
 
-    void setRecordingSettings(int integrationTime, int scansToAverage, int boxcarWidth);
-    int getIntegrationTime();
-    int getScansToAverage();
-    int getBoxcarWidth();
+    void setRecordingSettings();
 
 private:
-    int integrationTime;
-    int scansToAverage;
-    int boxcarWidth;
+    SpectrometerInterface& spectrometer_;
 };
 
-#endif //RECORDING_SETTINGS_H
+#endif // RECORDING_SETTINGS_H
 ```

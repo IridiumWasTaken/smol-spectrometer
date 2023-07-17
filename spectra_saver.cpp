@@ -2,21 +2,25 @@
 #include "spectra_saver.h"
 #include <fstream>
 
-SpectraSaver::SpectraSaver(std::string filename) {
-    this->filename = filename;
+SpectraSaver::SpectraSaver(Spectrometer* spectrometer) {
+    this->spectrometer = spectrometer;
 }
 
-void SpectraSaver::saveSpectra(std::vector<double> spectra) {
+void SpectraSaver::saveSpectra(std::string filename) {
+    std::vector<double> spectraData = spectrometer->getSpectraData();
+
     std::ofstream file;
-    file.open(this->filename, std::ios::out | std::ios::app);
-    
-    if (file.is_open()) {
-        for (auto &spectra_value : spectra) {
-            file << spectra_value << "\n";
-        }
-        file.close();
-    } else {
-        std::cerr << "Unable to open file: " << this->filename << std::endl;
+    file.open(filename);
+
+    if (!file) {
+        std::cerr << "Unable to open file " << filename << std::endl;
+        return;
     }
+
+    for (double data : spectraData) {
+        file << data << "\n";
+    }
+
+    file.close();
 }
 ```

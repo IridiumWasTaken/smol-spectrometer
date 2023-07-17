@@ -7,13 +7,13 @@
 
 class SpectraSaver {
 public:
-    SpectraSaver(SpectrometerInterface* spectrometerInterface);
+    SpectraSaver(SpectrometerInterface* spectrometer);
     ~SpectraSaver();
 
     void saveSpectra(const std::string& filename);
 
 private:
-    SpectrometerInterface* m_spectrometerInterface;
+    SpectrometerInterface* spectrometer_;
 };
 
 #endif // SPECTRA_SAVER_H

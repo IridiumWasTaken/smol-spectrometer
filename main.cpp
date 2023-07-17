@@ -6,27 +6,22 @@
 #include "spectra_saver.h"
 
 int main() {
-    // Create objects
     SpectrometerInterface spectrometerInterface;
     RecordingSettings recordingSettings;
     SpectraReader spectraReader;
     SpectraDisplay spectraDisplay;
     SpectraSaver spectraSaver;
 
-    // Interface with spectrometer
-    spectrometerInterface.connect();
-
-    // Set the recording settings
-    recordingSettings.setSettings();
-
-    // Read measured spectra
-    auto spectra = spectraReader.readSpectra();
-
-    // Display read spectra
-    spectraDisplay.displaySpectra(spectra);
-
-    // Save read spectra
-    spectraSaver.saveSpectra(spectra);
+    try {
+        spectrometerInterface.initializeSpectrometer();
+        recordingSettings.setRecordingSettings(spectrometerInterface.getSpectrometer());
+        spectraReader.readSpectra(spectrometerInterface.getSpectrometer());
+        spectraDisplay.displaySpectra(spectraReader.getSpectraData());
+        spectraSaver.saveSpectra(spectraReader.getSpectraData());
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
 
     return 0;
 }

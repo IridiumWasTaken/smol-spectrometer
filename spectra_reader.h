@@ -7,14 +7,15 @@
 
 class SpectraReader {
 public:
-    SpectraReader(SpectrometerInterface* spectrometerInterface, RecordingSettings* recordingSettings);
+    SpectraReader(SpectrometerInterface* spectrometer, RecordingSettings* settings);
     ~SpectraReader();
 
+    // Function to read spectra from the spectrometer
     void readSpectra();
 
 private:
-    SpectrometerInterface* m_spectrometerInterface;
-    RecordingSettings* m_recordingSettings;
+    SpectrometerInterface* spectrometer_;
+    RecordingSettings* settings_;
 };
 
 #endif // SPECTRA_READER_H

@@ -9,10 +9,10 @@ public:
     SpectraDisplay();
     ~SpectraDisplay();
 
-    void displaySpectra(const SpectraReader::SpectraData& spectraData);
+    void displaySpectra(const SpectraData& spectraData);
 
 private:
-    void drawSpectra(const SpectraReader::SpectraData& spectraData);
+    void drawSpectra(const SpectraData& spectraData);
 };
 
 #endif // SPECTRA_DISPLAY_H
